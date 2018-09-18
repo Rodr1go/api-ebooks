@@ -4,19 +4,19 @@ const errors = require('restify-errors');
 
 const routes = (server) => {
   
-  server.get('/', (req, res, next) => {
+  server.get('/ebooks', (req, res, next) => {
     knex('ebook').then((dados) => {
       res.send(dados);
     }, next)
   });
     
-  server.post('/create', (req, res, next) => {
+  server.post('/ebooks/create', (req, res, next) => {
     knex('ebook').insert(req.body).then((dados) => {
       res.send(dados);
     }, next)
   });
     
-  server.get('/show/:id', (req, res, next) => {
+  server.get('/ebooks/show/:id', (req, res, next) => {
     const { id } = req.params;    
     knex('ebook').where('id', id).first().then((dados) => {
       if(!dados) return res.send(new errors.BadRequestError('Nada foi encontrado!'))
@@ -24,7 +24,7 @@ const routes = (server) => {
     }, next)
   });
     
-  server.put('/update/:id', (req, res, next) => {
+  server.put('/ebooks/update/:id', (req, res, next) => {
     const { id } = req.params;
     knex('ebook').where('id', id).update(req.body).then((dados) => {
       if(!dados) return res.send(new errors.BadRequestError('Nada foi encontrado!'))
@@ -32,7 +32,7 @@ const routes = (server) => {
     }, next)
   });
     
-  server.del('/delete/:id', (req, res, next) => {
+  server.del('/ebooks/delete/:id', (req, res, next) => {
     const { id } = req.params;
     knex('ebook').where('id', id).delete().then((dados) => {
       if(!dados) return res.send(new errors.BadRequestError('Nada foi encontrado!'))
